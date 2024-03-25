@@ -10,23 +10,54 @@ import (
 )
 
 func Handle() {
-	green := color.New(color.FgGreen).SprintFunc()
 	white := color.New(color.FgWhite).SprintFunc()
-	red := color.New(color.FgRed).SprintFunc()
+	cyan := color.New(color.FgCyan).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 
 	termWidth, _, _ := term.GetSize(0)
 
+	twoColPattern := "| %s\t\t\t | %s\n"
+	threeColPattern := "| %s\t | %s\t | %s\n"
+
 	if termWidth > 80 {
-		fmt.Fprintf(w, "%s\t%s\t%s\n", green("Name"), white("IPs"), red("Address"))
-		for _, option := range DnsOptions {
-			fmt.Fprintf(w, "%s\t%s\t%s\n", green(option.Name), white(option.IPs), red(option.Address))
+		fmt.Fprintf(w, threeColPattern,
+			white("Name"),
+			white("IPs"),
+			white("Address"))
+
+		for idx, option := range DnsOptions {
+			if idx%2 == 0 {
+				fmt.Fprintf(w, threeColPattern,
+					cyan(option.Name),
+					cyan(option.IPs),
+					cyan(option.Address))
+			} else {
+				fmt.Fprintf(w, threeColPattern,
+					green(option.Name),
+					green(option.IPs),
+					green(option.Address),
+				)
+			}
 		}
 	} else {
-		fmt.Fprintf(w, "%s\t\t\t%s\n", green("Name"), white("IPs"))
-		for _, option := range DnsOptions {
-			fmt.Fprintf(w, "%s\t\t\t%s\n", green(option.Name), white(option.IPs))
+		fmt.Fprintf(w, twoColPattern,
+			white("Name"),
+			white("IPs"))
+
+		for idx, option := range DnsOptions {
+			if idx%2 == 0 {
+				fmt.Fprintf(w, twoColPattern,
+					cyan(option.Name),
+					cyan(option.IPs),
+				)
+			} else {
+				fmt.Fprintf(w, twoColPattern,
+					green(option.Name),
+					green(option.IPs),
+				)
+			}
 		}
 	}
 
