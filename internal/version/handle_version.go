@@ -8,7 +8,7 @@ import (
 var Version = "0.1"
 
 func HandleVersion() {
-	fmt.Println("Current Version: DNS-GO:", Version)
+	fmt.Println("Current version of DNS-GO:", Version)
 
 	os.Exit(0)
 }

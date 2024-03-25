@@ -1,4 +1,5 @@
 # To-do List
 
-- [ ] Add Version Command
-- [ ] Add Help Command
+- [*] Add Help Command
+- [*] Add Version Command
+- [ ] Add 
