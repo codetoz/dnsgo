@@ -6,7 +6,7 @@ import (
 	"dnsgo/internal/helpers"
 )
 
-var Version = "0.1"
+var Version = "1.0.0"
 
 func Handle() {
 	fmt.Println("Current version of DNS-GO:", Version)
