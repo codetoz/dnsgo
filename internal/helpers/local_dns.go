@@ -2,7 +2,7 @@ package helpers
 
 import "strings"
 
-var localDnsList = []string{"192.168", "127.0.0.53"}
+var localDnsList = []string{"192.168", "127.0.0.53", "172"}
 
 func IsLocalDns(dns string) bool {
 	for _, localDns := range localDnsList {
