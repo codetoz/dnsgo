@@ -1,4 +1,4 @@
-package references
+package constants
 
 var Strings = map[string]string{
 	"display_version": "Package Version",

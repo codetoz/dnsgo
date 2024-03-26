@@ -9,6 +9,7 @@ import (
 	"golang.org/x/term"
 
 	"dnsgo/internal/helpers"
+	"dnsgo/internal/helpers/dns"
 )
 
 func Handle() {
@@ -29,7 +30,7 @@ func Handle() {
 			white("IPs"),
 			white("Address"))
 
-		for idx, option := range DnsOptions {
+		for idx, option := range dns.DnsOptions {
 			if idx%2 == 0 {
 				fmt.Fprintf(w, threeColPattern,
 					cyan(option.Name),
@@ -48,7 +49,7 @@ func Handle() {
 			white("Name"),
 			white("IPs"))
 
-		for idx, option := range DnsOptions {
+		for idx, option := range dns.DnsOptions {
 			if idx%2 == 0 {
 				fmt.Fprintf(w, twoColPattern,
 					cyan(option.Name),

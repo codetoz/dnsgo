@@ -5,11 +5,11 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"dnsgo/internal/constants"
 	"dnsgo/internal/current"
-	"dnsgo/internal/references"
 )
 
-var currentShortDisplay = references.Strings["display_current"]
+var currentShortDisplay = constants.Strings["display_current"]
 var currentCommandName = "current"
 var currentCommandShorthand = "c"
 var currentCommandAliases = []string{"crt"}

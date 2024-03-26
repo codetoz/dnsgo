@@ -5,11 +5,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"dnsgo/internal/references"
+	"dnsgo/internal/constants"
 	"dnsgo/internal/version"
 )
 
-var versionShortDisplay = references.Strings["display_version"]
+var versionShortDisplay = constants.Strings["display_version"]
 var versionCommandName = "version"
 var versionCommandShorthand = "v"
 

@@ -1,4 +1,4 @@
-package list
+package dns
 
 type DnsOption struct {
 	Name    string

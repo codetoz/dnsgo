@@ -5,11 +5,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"dnsgo/internal/references"
+	"dnsgo/internal/constants"
 	"dnsgo/internal/remove"
 )
 
-var removeShortDisplay = references.Strings["display_remove"]
+var removeShortDisplay = constants.Strings["display_remove"]
 var removeCommandName = "remove"
 var removeCommandShorthand = "r"
 var removeCommandAliases = []string{"rm", "clear"}

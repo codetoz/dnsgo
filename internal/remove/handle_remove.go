@@ -1,22 +1,24 @@
 package remove
 
 import (
-	"dnsgo/internal/helpers"
-	"dnsgo/internal/references"
 	"fmt"
+
+	"dnsgo/internal/constants"
+	"dnsgo/internal/helpers"
+	"dnsgo/internal/helpers/dns"
 )
 
 func Handle() {
 	goos := helpers.Goos()
 	switch goos {
 	case "linux":
-		err := removeDnsLinux()
+		err := dns.SetDnsServersLinux(nil)
 		if err != nil {
 			fmt.Println(err)
 			helpers.Cleanup()
 		}
 	case "darwin":
-		err := removeDnsMac()
+		err := dns.SetDnsServersMac(nil)
 		if err != nil {
 			fmt.Println(err)
 			helpers.Cleanup()
@@ -25,29 +27,11 @@ func Handle() {
 		fmt.Println("windows")
 		helpers.Cleanup()
 	default:
-		fmt.Println(references.Strings["unsupported_os"])
+		fmt.Println(constants.Strings["unsupported_os"])
 		helpers.Cleanup()
 	}
 
-	fmt.Println(references.Strings["dns_removed"])
+	fmt.Println(constants.Strings["dns_removed"])
 
 	helpers.Cleanup()
-}
-
-func removeDnsLinux() error {
-	//if backup file is exist
-	// replace /etc/resolve.conf with backup file
-
-	//if backup file is not exist
-	// set google DNS
-	return nil
-}
-
-func removeDnsMac() error {
-	_, err := helpers.ExecuteCommand("networksetup -setdnsservers Wi-Fi empty")
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

@@ -5,11 +5,11 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"dnsgo/internal/constants"
 	"dnsgo/internal/list"
-	"dnsgo/internal/references"
 )
 
-var listShortDisplay = references.Strings["display_list"]
+var listShortDisplay = constants.Strings["display_list"]
 var listCommandName = "list"
 var listCommandShorthand = "l"
 var listCommandAliases = []string{"ls"}
