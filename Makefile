@@ -1,5 +1,5 @@
 install:
-	go get ./cmd/
+	go get
 run:
 	go run ./main.go
 build:

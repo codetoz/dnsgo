@@ -9,12 +9,18 @@ import (
 	"dnsgo/internal/references"
 )
 
+var currentShortDisplay = references.Strings["display_current"]
+var currentCommandName = "current"
+var currentCommandShorthand = "c"
+var currentCommandAliases = []string{"crt"}
+
 func init() {
-	rootCmd.PersistentFlags().BoolP("current", "c", false, references.Strings[""])
+
+	rootCmd.PersistentFlags().BoolP(currentCommandName, currentCommandShorthand, false, currentShortDisplay)
 
 	rootCmd.ParseFlags(os.Args[1:])
 
-	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool("current"); cmdFlag {
+	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool(currentCommandName); cmdFlag {
 		current.Handle()
 	}
 
@@ -22,9 +28,9 @@ func init() {
 }
 
 var currentCmd = &cobra.Command{
-	Use:     "current",
-	Aliases: []string{"crt"},
-	Short:   references.Strings[""],
+	Use:     currentCommandName,
+	Aliases: currentCommandAliases,
+	Short:   currentShortDisplay,
 	Run: func(cmd *cobra.Command, args []string) {
 		current.Handle()
 	},

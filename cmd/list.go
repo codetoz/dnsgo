@@ -9,12 +9,17 @@ import (
 	"dnsgo/internal/references"
 )
 
+var listShortDisplay = references.Strings["display_list"]
+var listCommandName = "list"
+var listCommandShorthand = "l"
+var listCommandAliases = []string{"ls"}
+
 func init() {
-	rootCmd.PersistentFlags().BoolP("list", "l", false, references.Strings["display_list"])
+	rootCmd.PersistentFlags().BoolP(listCommandName, listCommandShorthand, false, listShortDisplay)
 
 	rootCmd.ParseFlags(os.Args[1:])
 
-	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool("list"); cmdFlag {
+	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool(listCommandName); cmdFlag {
 		list.Handle()
 	}
 
@@ -22,9 +27,9 @@ func init() {
 }
 
 var listCmd = &cobra.Command{
-	Use:     "list",
-	Aliases: []string{"ls"},
-	Short:   references.Strings["display_list"],
+	Use:     listCommandName,
+	Aliases: listCommandAliases,
+	Short:   listShortDisplay,
 	Run: func(cmd *cobra.Command, args []string) {
 		list.Handle()
 	},

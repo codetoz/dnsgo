@@ -9,12 +9,18 @@ import (
 	"dnsgo/internal/version"
 )
 
+var versionShortDisplay = references.Strings["display_version"]
+var versionCommandName = "version"
+var versionCommandShorthand = "v"
+
+// var versionCommandAliases = []string{"vv"}
+
 func init() {
-	rootCmd.PersistentFlags().BoolP("version", "v", false, references.Strings["display_version"])
+	rootCmd.PersistentFlags().BoolP(versionCommandName, versionCommandShorthand, false, versionShortDisplay)
 
 	rootCmd.ParseFlags(os.Args[1:])
 
-	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool("version"); cmdFlag {
+	if cmdFlag, _ := rootCmd.PersistentFlags().GetBool(versionCommandName); cmdFlag {
 		version.Handle()
 	}
 
@@ -22,8 +28,8 @@ func init() {
 }
 
 var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: references.Strings["display_version"],
+	Use:   versionCommandName,
+	Short: versionShortDisplay,
 	Run: func(cmd *cobra.Command, args []string) {
 		version.Handle()
 	},
