@@ -1,4 +1,4 @@
 package constants
 
-var BackupFilePath = "/etc/resolv.conf.bak"
+var DefaultFilePath = "/etc/resolv.conf.default"
 var UnixResolvFilePath = "/etc/resolv.conf"

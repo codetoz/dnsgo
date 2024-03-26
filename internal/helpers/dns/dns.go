@@ -29,35 +29,40 @@ func GetDnsServersUnix(servers *[]string) error {
 
 func GetDnsServersWindows() {}
 
-func SetDnsServersLinux(servers []string) error {
-	if servers == nil {
-		existsBackup, err := file.FileExists(constants.BackupFilePath)
+func SetDnsServersLinux(ips []string) error {
+	var resolvConfContent string
+
+	if ips == nil {
+		existsDefaultFile, err := file.FileExists(constants.DefaultFilePath)
 		if err != nil {
 			return err
 		}
 
-		if existsBackup {
-			file.ReplaceFile(constants.UnixResolvFilePath, constants.BackupFilePath)
+		if existsDefaultFile {
+			file.ReplaceFile(constants.UnixResolvFilePath, constants.DefaultFilePath)
+			return nil
 		} else {
-			// set google DNS
+			// copy current resolv.conf file to another file (resolve.conf.default)
+			file.CopyFile(constants.UnixResolvFilePath, constants.DefaultFilePath)
 
+			// google DNS
 			googleDnsIPs := GetDnsIPsByName("google")
-			resolvConfContent := GenerateResolvFileContent(googleDnsIPs)
-			err := file.WriteStringFile(constants.UnixResolvFilePath, resolvConfContent)
-			if err != nil {
-				return err
-			}
+			resolvConfContent = GenerateResolvFileContent(googleDnsIPs)
 		}
-
-		return nil
+	} else {
+		resolvConfContent = GenerateResolvFileContent(ips)
 	}
 
-	// TODO handle set dns
+	err := file.WriteStringFile(constants.UnixResolvFilePath, resolvConfContent)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func SetDnsServersMac(servers []string) error {
-	if servers == nil {
+func SetDnsServersMac(ips []string) error {
+	if ips == nil {
 		_, err := helpers.ExecuteCommand("networksetup -setdnsservers Wi-Fi empty")
 		if err != nil {
 			return err
@@ -66,13 +71,19 @@ func SetDnsServersMac(servers []string) error {
 	}
 
 	// TODO handle set dns
+	dnsIpsString := strings.Join(ips, " ")
+	_, err := helpers.ExecuteCommand("networksetup -setdnsservers Wi-Fi " + dnsIpsString)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func GenerateResolvFileContent(dnsServers []string) string {
+func GenerateResolvFileContent(dnsIps []string) string {
 	fileContent := ""
 
-	for _, option := range dnsServers {
+	for _, option := range dnsIps {
 		fileContent += "nameserver " + option + "\n"
 	}
 
