@@ -32,19 +32,16 @@ func GetDnsServersWindows() {}
 func SetDnsServersLinux(ips []string) error {
 	var resolvConfContent string
 
-	if ips == nil {
-		existsDefaultFile, err := file.FileExists(constants.DefaultFilePath)
-		if err != nil {
-			return err
-		}
+	existsDefaultFile, existsDefaultFileErr := file.FileExists(constants.DefaultFilePath)
+	if existsDefaultFileErr != nil {
+		return existsDefaultFileErr
+	}
 
+	if ips == nil {
 		if existsDefaultFile {
 			file.ReplaceFile(constants.DefaultFilePath, constants.UnixResolvFilePath)
 			return nil
 		} else {
-			// copy current resolv.conf file to another file (resolve.conf.default)
-			file.CopyFile(constants.UnixResolvFilePath, constants.DefaultFilePath)
-
 			// google DNS
 			googleDnsIPs := GetDnsIPsByName("google")
 			resolvConfContent = GenerateResolvFileContent(googleDnsIPs)
@@ -53,12 +50,20 @@ func SetDnsServersLinux(ips []string) error {
 		resolvConfContent = GenerateResolvFileContent(ips)
 	}
 
-	err := file.WriteStringFile(constants.UnixResolvFilePath, resolvConfContent)
-	if err != nil {
-		return err
+	if !existsDefaultFile {
+		CreateDefaultResolvFile()
+	}
+	writeErr := file.WriteStringFile(constants.UnixResolvFilePath, resolvConfContent)
+	if writeErr != nil {
+		return writeErr
 	}
 
 	return nil
+}
+
+func CreateDefaultResolvFile() {
+	// copy current resolv.conf file to another file (resolve.conf.default)
+	file.CopyFile(constants.UnixResolvFilePath, constants.DefaultFilePath)
 }
 
 func SetDnsServersMac(ips []string) error {
