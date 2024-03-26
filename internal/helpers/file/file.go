@@ -16,10 +16,18 @@ func FileExists(filePath string) (bool, error) {
 	}
 }
 
-func ReplaceFile(sourcePath string, destinationPath string) error {
-	err := os.Rename(sourcePath, destinationPath)
+func RemoveFile(filePath string) error {
+	err := os.Remove(filePath)
 	if err != nil {
 		return err
+	}
+	return nil
+}
+
+func ReplaceFile(oldPath string, newPath string) error {
+	renameErr := os.Rename(oldPath, newPath)
+	if renameErr != nil {
+		return renameErr
 	}
 
 	return nil

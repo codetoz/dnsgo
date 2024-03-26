@@ -39,7 +39,7 @@ func SetDnsServersLinux(ips []string) error {
 		}
 
 		if existsDefaultFile {
-			file.ReplaceFile(constants.UnixResolvFilePath, constants.DefaultFilePath)
+			file.ReplaceFile(constants.DefaultFilePath, constants.UnixResolvFilePath)
 			return nil
 		} else {
 			// copy current resolv.conf file to another file (resolve.conf.default)
