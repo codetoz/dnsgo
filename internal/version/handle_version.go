@@ -2,7 +2,8 @@ package version
 
 import (
 	"fmt"
-	"os"
+
+	"dnsgo/internal/helpers"
 )
 
 var Version = "0.1"
@@ -10,5 +11,5 @@ var Version = "0.1"
 func Handle() {
 	fmt.Println("Current version of DNS-GO:", Version)
 
-	os.Exit(0)
+	helpers.Cleanup()
 }

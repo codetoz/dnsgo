@@ -7,6 +7,8 @@ import (
 
 	"github.com/fatih/color"
 	"golang.org/x/term"
+
+	"dnsgo/internal/helpers"
 )
 
 func Handle() {
@@ -63,5 +65,5 @@ func Handle() {
 
 	w.Flush()
 
-	os.Exit(0)
+	helpers.Cleanup()
 }
