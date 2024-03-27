@@ -38,7 +38,7 @@ func Handle(dnsName string) {
 		helpers.Cleanup()
 	}
 
-	fmt.Println(constants.Strings["dns_set"])
+	fmt.Println(constants.Strings["dns_set"], dnsName)
 
 	helpers.Cleanup()
 }

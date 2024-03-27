@@ -6,6 +6,7 @@ var Strings = map[string]string{
 	"display_current": "Show Current DNS",
 	"display_remove":  "Remove DNS",
 	"display_set":     "Set DNS by Name",
+	"display_change":  "Set Random DNS",
 
 	"unsupported_os": "Invalid OS type!",
 

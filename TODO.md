@@ -5,5 +5,7 @@
 - [*] Add List Command
 - [*] Add Current Command
 - [*] Add Remove Command
-- [ ] Add Set Command
-- [ ] Add Change Command
+- [*] Add Set Command
+- [*] Add Change Command
+- [ ] Impl Lookup Feature
+- [ ] Impl Add New DNS Option
